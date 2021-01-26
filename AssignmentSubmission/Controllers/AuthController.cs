@@ -15,7 +15,6 @@ namespace AssignmentSubmission.Controllers
 {
     public class AuthController : Controller
     {
-        private static readonly HttpContext context;
         private readonly ILogger<AuthController> _logger;
         private readonly IMainDBUnitOfWork _IMainDBUnitOfWork;
         public AuthController(
