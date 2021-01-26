@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AssignmentSubmission.DAL.Repositories
+{
+    public interface IBaseRepository<T> : IDisposable
+    {
+        Task<IQueryable<T>> GetAll();
+
+        T GetById(long id);
+
+        void Update(T entity);
+
+        void Insert(T entity);
+
+        void Delete(T entity);
+
+        void InsertRange(List<T> entityList);
+
+        void RemoveRange(List<T> entityList);
+
+        void Attach(T entity);
+
+        void SaveChanges();
+
+    }
+}
