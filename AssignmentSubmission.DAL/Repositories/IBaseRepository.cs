@@ -10,7 +10,7 @@ namespace AssignmentSubmission.DAL.Repositories
     {
         Task<IQueryable<T>> GetAll();
 
-        T GetById(long id);
+        T GetById(int id);
 
         void Update(T entity);
 

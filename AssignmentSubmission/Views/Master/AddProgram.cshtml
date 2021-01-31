@@ -1,0 +1,26 @@
+﻿@model ProgramModel
+<h1>Add Program</h1>
+
+<div class="container jumbotron">
+
+    <form method="post">
+        <div class="form-group">
+            <label for="programTitle">Program Name:</label>
+            <input type="text" class="form-control" placeholder="Program Name"
+                   id="programTitle" value="@Model.ProgramName" required name="ProgramName">
+            <small id="signupEmailValidation" class="text-danger"></small>
+
+        </div>
+        <div class="form-group">
+            <label for="programCode">Program Code:</label>
+            <input type="text" class="form-control" placeholder="ex: MCA"
+                   id="programCode" value="@Model.ProgramCode" required name="ProgramCode">
+            <small id="signupEmailValidation" class="text-danger"></small>
+
+        </div>
+        <input type="text" style="visibility:hidden" name="Id" value="@Model.Id" />
+        <input type="submit" class="btn btn-primary" value="Add" />
+    </form>
+
+</div>
+
