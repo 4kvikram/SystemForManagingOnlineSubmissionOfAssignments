@@ -17,7 +17,7 @@ namespace AssignmentSubmission.DAL.Repositories
             _dbContext = context;
             Dbset = context.Set<T>();
         }
-        public T GetById(long id)
+        public T GetById(int id)
         {
             //var i= (from a in Dbset where  a.ID == id select a)
             return Dbset.Find(id);

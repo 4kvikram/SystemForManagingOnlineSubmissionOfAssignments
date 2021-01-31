@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using AssignmentSubmission.DAL.Context;
 using AssignmentSubmission.DAL.Repositories;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using AssignmentSubmission.BAL.Services;
 
 namespace AssignmentSubmission
 {
@@ -27,6 +28,7 @@ namespace AssignmentSubmission
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<MasterService>();
             services.AddControllersWithViews();
             services.AddDbContext<AssgnmentDBContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
