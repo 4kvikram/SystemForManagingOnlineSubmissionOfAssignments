@@ -29,15 +29,16 @@ namespace AssignmentSubmission.Controllers
             _IMainDBUnitOfWork = mainDBUnitOfWork;
             _masterService = masterService;
         }
-        public IActionResult GetAllProgram()
+        #region Manage Program
+        public async Task<IActionResult> GetAllProgram()
         {
-            return View();
-        }
+            ResponseModel courses = await _masterService.GetAllPrograms();
 
+            return View(courses);
+        }
         [HttpGet]
         public IActionResult AddProgram(int Id = 0)
         {
-            Id = 1;
             ProgramModel programModel = new ProgramModel();
             if (Id != 0)
             {
@@ -54,7 +55,6 @@ namespace AssignmentSubmission.Controllers
             }
             return View(programModel);
         }
-
         [HttpPost]
         public IActionResult AddProgram(ProgramModel programModel)
         {
@@ -69,7 +69,6 @@ namespace AssignmentSubmission.Controllers
                 };
                 _IMainDBUnitOfWork.ProgramsDetailsRepository.Update(program);
                 _IMainDBUnitOfWork.Save();
-                return View(programModel);
             }
             else
             {
@@ -83,9 +82,23 @@ namespace AssignmentSubmission.Controllers
                 };
                 _IMainDBUnitOfWork.ProgramsDetailsRepository.Insert(program);
                 _IMainDBUnitOfWork.Save();
-                return View(programModel);
             }
+            return RedirectToAction("GetAllProgram");
         }
+        public IActionResult EditProgram(int Id)
+        {
+            return RedirectToAction("AddProgram", new { Id = Id });
+        }
+        public IActionResult DeleteProgram(int Id)
+        {
+            var program = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(Id);
+            _IMainDBUnitOfWork.ProgramsDetailsRepository.Delete(program);
+            _IMainDBUnitOfWork.Save();
+            return RedirectToAction("GetAllProgram");
+        }
+
+        #endregion
+        #region Manage Course
         [HttpGet]
         public async Task<IActionResult> AddCourse()
         {
@@ -115,6 +128,6 @@ namespace AssignmentSubmission.Controllers
             _IMainDBUnitOfWork.Save();
             return View();
         }
-
+        #endregion 
     }
 }
