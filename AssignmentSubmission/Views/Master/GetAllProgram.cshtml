@@ -1,1 +1,35 @@
-﻿get all program 
+﻿@model ResponseModel
+@{
+    var ProgramData = (List<ProgramModel>)Model.data;
+    int count = 1;
+}
+@Html.ActionLink("Add Programm", "AddProgram", "Master", null, new { @class = "btn btn-primary float-right" })
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Code</th>
+            <th scope="col">Title</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in ProgramData)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td>@item.ProgramCode</td>
+                <td>@item.ProgramName</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditProgram", "Master", new { Id = item.Id }, new { @class = "btn btn-info " })
+
+                    @Html.ActionLink("Delete", "DeleteProgram", "Master", new { Id = item.Id }, new { @class = "btn btn-danger " })
+
+                </td>
+            </tr>
+            count++;
+        }
+
+    </tbody>
+</table>
