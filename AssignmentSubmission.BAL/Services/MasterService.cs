@@ -21,6 +21,33 @@ namespace AssignmentSubmission.BAL.Services
             _IMainDBUnitOfWork = mainDBUnitOfWork;
         }
 
+        public async Task<List<CourseModel>> GetAllCourse()
+        {
+
+            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAll());
+            if (result != null)
+            {
+                List<CourseModel> courseModel = new List<CourseModel>();
+                foreach (var item in result)
+                {
+                    courseModel.Add(new CourseModel()
+                    {
+                        Id = item.Id,
+                        Code = item.Coursecode,
+                        ProgramId = item.ProgramDetails.Id,
+                        ProgramName = item.ProgramDetails.Title,
+                        Title = item.Title
+                    });
+                }
+                return courseModel;
+            }
+            else
+            {
+                return null;
+            }
+
+
+        }
         public async Task<ResponseModel> GetAllPrograms()
         {
 

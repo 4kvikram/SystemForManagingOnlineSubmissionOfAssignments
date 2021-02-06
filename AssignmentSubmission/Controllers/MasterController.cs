@@ -100,7 +100,19 @@ namespace AssignmentSubmission.Controllers
         #endregion
         #region Manage Course
         [HttpGet]
-        public async Task<IActionResult> AddCourse()
+        public IActionResult GetAllCourse()
+        {
+            var course = _masterService.GetAllCourse();
+            if (course!=null)
+            {
+
+            }
+            
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddCourse(int id = 0)
         {
             DropDownModel dropDown = new DropDownModel();
             var courses = await _masterService.GetAllPrograms();
@@ -127,6 +139,18 @@ namespace AssignmentSubmission.Controllers
             _IMainDBUnitOfWork.CourseDetailsRepository.Insert(course);
             _IMainDBUnitOfWork.Save();
             return View();
+        }
+
+        public IActionResult EditCourse(int Id)
+        {
+            return RedirectToAction("AddProgram", new { Id = Id });
+        }
+        public IActionResult DeleteCourse(int Id)
+        {
+            var program = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(Id);
+            _IMainDBUnitOfWork.ProgramsDetailsRepository.Delete(program);
+            _IMainDBUnitOfWork.Save();
+            return RedirectToAction("GetAllProgram");
         }
         #endregion 
     }
