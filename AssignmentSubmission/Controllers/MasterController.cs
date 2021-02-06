@@ -93,7 +93,7 @@ namespace AssignmentSubmission.Controllers
             var courses = await _masterService.GetAllPrograms();
             if (courses != null && courses.Success)
             {
-                SelectList selectLists = new SelectList((List<ProgramModel>)courses.data, "id", "ProgramName");
+                SelectList selectLists = new SelectList((List<ProgramModel>)courses.data, "Id", "ProgramName");
                 dropDown.DropDownData = selectLists;
             }
             return View(dropDown);
