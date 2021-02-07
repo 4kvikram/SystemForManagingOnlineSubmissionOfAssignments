@@ -15,8 +15,14 @@ namespace AssignmentSubmission.DAL.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Coursecode { get; set; }
-        [ForeignKey("ProgramId")]
+
+        //Foreign Key
+        [Display(Name = "ProgramsDetails")]
+        public virtual int ProgramDetailsId { get; set; }
+
+        [ForeignKey("ProgramDetailsId")]
         public virtual ProgramsDetails ProgramDetails { get; set; }
+
         public int Status { get; set; }
         public DateTime DateOfCreated { get; set; }
         public DateTime DateOfModify { get; set; }

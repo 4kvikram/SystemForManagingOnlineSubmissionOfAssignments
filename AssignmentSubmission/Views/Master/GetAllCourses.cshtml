@@ -1,0 +1,37 @@
+﻿@model ResponseModel
+@{
+    var CourseData = (List<CourseModel>)Model.data;
+    int count = 1;
+}
+@Html.ActionLink("Add Course", "AddCourse", "Master", null, new { @class = "btn btn-primary float-right" })
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Program Code</th>
+            <th scope="col">Code</th>
+            <th scope="col">Title</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in CourseData)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td>@item.ProgramCode</td>
+                <td>@item.Code</td>
+                <td>@item.Title</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditCourse", "Master", new { Id = item.Id }, new { @class = "btn btn-info " })
+
+                    @Html.ActionLink("Delete", "DeleteCourse", "Master", new { Id = item.Id }, new { @class = "btn btn-danger " })
+
+                </td>
+            </tr>
+            count++;
+        }
+
+    </tbody>
+</table>

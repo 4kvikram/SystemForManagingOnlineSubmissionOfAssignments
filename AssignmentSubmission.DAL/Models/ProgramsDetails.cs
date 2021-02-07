@@ -12,7 +12,7 @@ namespace AssignmentSubmission.DAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public int ProgramId { get; set; }
         public string Title { get; set; }
         public string Code { get; set; }
         public int Status { get; set; }
