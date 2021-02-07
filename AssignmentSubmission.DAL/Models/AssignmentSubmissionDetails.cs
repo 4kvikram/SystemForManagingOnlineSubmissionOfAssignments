@@ -14,9 +14,18 @@ namespace AssignmentSubmission.DAL.Models
         [Required]
         public int Id { get; set; }
 
+        //Foreign Key
+        [Display(Name = "UserDetails")]
+        public virtual int UserId { get; set; }
+
         [ForeignKey("UserId")]
         public virtual UserDetails UserDetails { get; set; }
         public string AssignmentsCode { get; set; }
+
+        //Foreign Key
+        [Display(Name = "CourseDetails")]
+        public virtual int CourseId { get; set; }
+
         [ForeignKey("CourseId")]
         public virtual CourseDetails CourseDetails { get; set; }
         public int Marks { get; set; }

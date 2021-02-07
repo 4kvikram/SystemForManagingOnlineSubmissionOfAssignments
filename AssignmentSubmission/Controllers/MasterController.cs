@@ -46,7 +46,7 @@ namespace AssignmentSubmission.Controllers
                 if (result != null)
                 {
 
-                    programModel.Id = result.Id;
+                    programModel.Id = result.ProgramId;
                     programModel.ProgramName = result.Title;
                     programModel.ProgramCode = result.Code;
 
@@ -62,7 +62,7 @@ namespace AssignmentSubmission.Controllers
             {
                 ProgramsDetails program = new ProgramsDetails()
                 {
-                    Id = programModel.Id,
+                    ProgramId = programModel.Id,
                     Code = programModel.ProgramCode,
                     Title = programModel.ProgramName,
                     DateOfModify = DateTime.Now,
@@ -99,6 +99,22 @@ namespace AssignmentSubmission.Controllers
 
         #endregion
         #region Manage Course
+        public async Task<IActionResult> GetAllCourses()
+        {
+            var courses = await _masterService.GetAllCourse();
+            if (courses != null)
+            {
+                ResponseModel responseModel = new ResponseModel()
+                {
+                    data = courses,
+                    Message = "",
+                    Success = true
+                };
+                return View(responseModel);
+            }
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> AddCourse()
         {
@@ -129,5 +145,7 @@ namespace AssignmentSubmission.Controllers
             return View();
         }
         #endregion 
+
+       
     }
 }

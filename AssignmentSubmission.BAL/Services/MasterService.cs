@@ -32,7 +32,7 @@ namespace AssignmentSubmission.BAL.Services
                 {
                     programModels.Add(new ProgramModel()
                     {
-                        Id = item.Id,
+                        Id = item.ProgramId,
                         ProgramCode = item.Code,
                         ProgramName = $"{item.Title} ({item.Code})"
                     });
@@ -52,6 +52,33 @@ namespace AssignmentSubmission.BAL.Services
                     Message = "Data not found",
                     Success = false
                 };
+            }
+        }
+
+
+        public async Task<List<CourseModel>> GetAllCourse()
+        {
+
+            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAll());
+            if (result != null)
+            {
+                List<CourseModel> courseModels = new List<CourseModel>();
+                foreach (var item in result)
+                {
+                    courseModels.Add(new CourseModel()
+                    {
+                        Id = item.Id,
+                        Code = item.Coursecode,
+                        Title = item.Title,
+                        ProgramId = item.ProgramDetailsId,
+                        ProgramCode = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(item.ProgramDetailsId)?.Code
+                    }); 
+                }
+                return courseModels;
+            }
+            else
+            {
+                return null;
             }
         }
     }
