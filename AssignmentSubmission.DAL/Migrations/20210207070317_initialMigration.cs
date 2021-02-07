@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AssignmentSubmission.DAL.Migrations
 {
-    public partial class MyInitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,24 +22,6 @@ namespace AssignmentSubmission.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_assignmentDateSettings", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "courseDetails",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Coursecode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Programmid = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    DateOfCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateOfModify = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_courseDetails", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,6 +52,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     OTP = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -82,38 +65,27 @@ namespace AssignmentSubmission.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "assignmentSubmissionDetails",
+                name: "courseDetails",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    AssignmentsCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CourseId = table.Column<int>(type: "int", nullable: true),
-                    Marks = table.Column<int>(type: "int", nullable: false),
-                    VivaMarks = table.Column<int>(type: "int", nullable: false),
-                    CheckedBy = table.Column<int>(type: "int", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Coursecode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProgramDetailsId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     DateOfCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfModify = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_assignmentSubmissionDetails", x => x.Id);
+                    table.PrimaryKey("PK_courseDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_assignmentSubmissionDetails_courseDetails_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "courseDetails",
+                        name: "FK_courseDetails_ProgramsDetails_ProgramDetailsId",
+                        column: x => x.ProgramDetailsId,
+                        principalTable: "ProgramsDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_assignmentSubmissionDetails_userDetails_UserId",
-                        column: x => x.UserId,
-                        principalTable: "userDetails",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +144,41 @@ namespace AssignmentSubmission.DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "assignmentSubmissionDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    AssignmentsCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourseId = table.Column<int>(type: "int", nullable: true),
+                    Marks = table.Column<int>(type: "int", nullable: false),
+                    VivaMarks = table.Column<int>(type: "int", nullable: false),
+                    CheckedBy = table.Column<int>(type: "int", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    DateOfCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfModify = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_assignmentSubmissionDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_assignmentSubmissionDetails_courseDetails_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "courseDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_assignmentSubmissionDetails_userDetails_UserId",
+                        column: x => x.UserId,
+                        principalTable: "userDetails",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_assignmentSubmissionDetails_CourseId",
                 table: "assignmentSubmissionDetails",
@@ -181,6 +188,11 @@ namespace AssignmentSubmission.DAL.Migrations
                 name: "IX_assignmentSubmissionDetails_UserId",
                 table: "assignmentSubmissionDetails",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_courseDetails_ProgramDetailsId",
+                table: "courseDetails",
+                column: "ProgramDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_studentDetails_ProgramId",
@@ -216,10 +228,10 @@ namespace AssignmentSubmission.DAL.Migrations
                 name: "courseDetails");
 
             migrationBuilder.DropTable(
-                name: "ProgramsDetails");
+                name: "userDetails");
 
             migrationBuilder.DropTable(
-                name: "userDetails");
+                name: "ProgramsDetails");
         }
     }
 }

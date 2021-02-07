@@ -1,5 +1,11 @@
 ﻿@model DropDownModel
-
+@{
+    CourseModel courseModel = new CourseModel();
+    if (Model.Data != null)
+    {
+        courseModel = (CourseModel)Model.Data;
+    }
+}
 <h1>Add Course</h1>
 
 <div class="container jumbotron">
@@ -9,25 +15,33 @@
             <label for="ProgramId">Program Name:</label>
             @if (Model != null)
             {
-                @Html.DropDownList("ProgramId", Model.DropDownData, "Select Program", new { @class = "select form-control" })
+                if (Model.Data == null)
+                {
+                    @Html.DropDownList("ProgramId", Model.DropDownData, "Select Program", new { @class = "select form-control" })
+                }
+                else
+                {
+                    @Html.DropDownList("ProgramId", Model.DropDownData, null, new { @class = "select form-control" })
+                }
             }
 
 
         </div>
         <div class="form-group">
             <label for="subjectName">Subject Name:</label>
-            <input type="text" class="form-control" placeholder="ex: MCA"
+            <input type="text" class="form-control" placeholder="ex: MCA" value="@courseModel.Title"
                    id="subjectName" required name="Title">
             <small id="signupEmailValidation" class="text-danger"></small>
 
         </div>
         <div class="form-group">
             <label for="subjectCode">Subject Code:</label>
-            <input type="text" class="form-control" placeholder="ex: MCA"
+            <input type="text" class="form-control" placeholder="ex: MCA" value="@courseModel.Code"
                    id="subjectCode" required name="Code">
             <small id="signupEmailValidation" class="text-danger"></small>
 
         </div>
+        <input type="text" style="visibility:hidden" name="Id" value="@courseModel.Id" />
         <input type="submit" class="btn btn-primary" value="Add" />
     </form>
 

@@ -116,14 +116,30 @@ namespace AssignmentSubmission.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddCourse()
+        public async Task<IActionResult> AddCourse(int Id = 0)
         {
             DropDownModel dropDown = new DropDownModel();
-            var courses = await _masterService.GetAllPrograms();
-            if (courses != null && courses.Success)
+            var programs = await _masterService.GetAllPrograms();
+            SelectList selectLists;
+            if (programs != null && programs.Success && Id == 0)
             {
-                SelectList selectLists = new SelectList((List<ProgramModel>)courses.data, "Id", "ProgramName");
+                selectLists = new SelectList((List<ProgramModel>)programs.data, "Id", "ProgramName");
                 dropDown.DropDownData = selectLists;
+            }
+            if (Id != 0)
+            {
+                var data = _IMainDBUnitOfWork.CourseDetailsRepository.GetById(Id);
+                CourseModel courseModel = new CourseModel() 
+                {
+                    Id = data.Id,
+                    Code = data.Coursecode,
+                    ProgramId = data.ProgramDetailsId,
+                    Title = data.Title
+                };
+                var defaultValue = ((List<ProgramModel>)programs.data).Where(x => x.Id == data.ProgramDetailsId).FirstOrDefault();
+                selectLists = new SelectList((List<ProgramModel>)programs.data, "Id", "ProgramName", defaultValue);
+                dropDown.DropDownData = selectLists;
+                dropDown.Data = courseModel;
             }
             return View(dropDown);
         }
@@ -131,21 +147,50 @@ namespace AssignmentSubmission.Controllers
         [HttpPost]
         public IActionResult AddCourse(CourseModel courseModel)
         {
-            CourseDetails course = new CourseDetails()
+            if (courseModel.Id > 0)
             {
-                ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(courseModel.ProgramId),
-                Coursecode = courseModel.Code,
-                Title = courseModel.Title,
-                DateOfModify = DateTime.Now,
-                DateOfCreated = DateTime.Now,
-                Status = Status.Active
-            };
-            _IMainDBUnitOfWork.CourseDetailsRepository.Insert(course);
-            _IMainDBUnitOfWork.Save();
-            return View();
-        }
-        #endregion 
+                CourseDetails course = new CourseDetails()
+                {
+                    Id=courseModel.Id,
+                    ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(courseModel.ProgramId),
+                    Coursecode = courseModel.Code,
+                    Title = courseModel.Title,
+                    DateOfModify = DateTime.Now
+                };
+                _IMainDBUnitOfWork.CourseDetailsRepository.Update(course);
+                _IMainDBUnitOfWork.Save();
+            }
+            else
+            {
 
-       
+                CourseDetails course = new CourseDetails()
+                {
+                    ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(courseModel.ProgramId),
+                    Coursecode = courseModel.Code,
+                    Title = courseModel.Title,
+                    DateOfModify = DateTime.Now,
+                    DateOfCreated = DateTime.Now,
+                    Status = Status.Active
+                };
+                _IMainDBUnitOfWork.CourseDetailsRepository.Insert(course);
+                _IMainDBUnitOfWork.Save();
+            }
+            return RedirectToAction("GetAllCourses");
+        }
+
+        public IActionResult EditCourse(int Id)
+        {
+            return RedirectToAction("AddCourse", new { Id = Id });
+        }
+        public IActionResult DeleteCourse(int Id)
+        {
+            var course = _IMainDBUnitOfWork.CourseDetailsRepository.GetById(Id);
+            _IMainDBUnitOfWork.CourseDetailsRepository.Delete(course);
+            _IMainDBUnitOfWork.Save();
+            return RedirectToAction("GetAllCourses");
+        }
+        #endregion
+
+
     }
 }
