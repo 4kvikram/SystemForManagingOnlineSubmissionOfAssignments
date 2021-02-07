@@ -9,5 +9,6 @@ namespace AssignmentSubmission.Models
     public class DropDownModel
     {
         public SelectList DropDownData { get; set; }
+        public Object Data { get; set; }
     }
 }

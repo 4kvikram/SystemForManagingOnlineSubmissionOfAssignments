@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentSubmission.DAL.Migrations
 {
     [DbContext(typeof(AssgnmentDBContext))]
-    [Migration("20210126080437_addGender")]
-    partial class addGender
+    [Migration("20210207070317_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -116,7 +116,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<DateTime>("DateOfModify")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Programmid")
+                    b.Property<int>("ProgramDetailsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -127,12 +127,14 @@ namespace AssignmentSubmission.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ProgramDetailsId");
+
                     b.ToTable("courseDetails");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.ProgramsDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProgramId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("Id")
@@ -153,7 +155,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProgramId");
 
                     b.ToTable("ProgramsDetails");
                 });
@@ -302,6 +304,17 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Navigation("CourseDetails");
 
                     b.Navigation("UserDetails");
+                });
+
+            modelBuilder.Entity("AssignmentSubmission.DAL.Models.CourseDetails", b =>
+                {
+                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
+                        .WithMany()
+                        .HasForeignKey("ProgramDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProgramDetails");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
