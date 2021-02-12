@@ -14,7 +14,6 @@
         </tr>
     </thead>
     <tbody>
-
         @foreach (var item in ProgramData)
         {
             <tr>
@@ -23,13 +22,10 @@
                 <td>@item.ProgramName</td>
                 <td>
                     @Html.ActionLink("Edit", "EditProgram", "Master", new { Id = item.Id }, new { @class = "btn btn-info " })
-
                     @Html.ActionLink("Delete", "DeleteProgram", "Master", new { Id = item.Id }, new { @class = "btn btn-danger " })
-
                 </td>
             </tr>
             count++;
         }
-
     </tbody>
 </table>

@@ -45,7 +45,6 @@ namespace AssignmentSubmission.Controllers
                 var result = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(Id);
                 if (result != null)
                 {
-
                     programModel.Id = result.ProgramId;
                     programModel.ProgramName = result.Title;
                     programModel.ProgramCode = result.Code;
