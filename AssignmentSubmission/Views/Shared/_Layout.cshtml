@@ -1,4 +1,14 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@using AssignmentSubmission.BAL.Constants
+@using System.Text.Json
+@{
+    var x = Context.Session.GetString("ActiveUser");
+    ActiveUserModel userData = new ActiveUserModel();
+    if (x != null)
+    {
+        userData = JsonSerializer.Deserialize<ActiveUserModel>(x);
+    }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,11 +20,17 @@
     <link rel="stylesheet" href="~/css/site.css" />
 
     @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
-          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">*@
-    
+              integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">*@
 
+    @if (userData.Role == Role.User)
+    {
+
+    } @if (userData.Role == Role.User)
+    {
+
+    }
 
 </head>
 <body>
@@ -40,7 +56,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Master" asp-action="GetAllCourses">Manage Course</a>
                         </li>
-                        @if (true)
+                        @if (string.IsNullOrEmpty(userData.Email))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
