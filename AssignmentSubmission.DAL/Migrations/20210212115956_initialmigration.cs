@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AssignmentSubmission.DAL.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,11 +94,11 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     EnrollmentNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudyCenterCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProgramId = table.Column<int>(type: "int", nullable: true),
+                    ProgramDetailsId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     DateOfCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateOfModify = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -107,17 +107,17 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     table.PrimaryKey("PK_studentDetails", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_studentDetails_ProgramsDetails_ProgramId",
-                        column: x => x.ProgramId,
+                        name: "FK_studentDetails_ProgramsDetails_ProgramDetailsId",
+                        column: x => x.ProgramDetailsId,
                         principalTable: "ProgramsDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_studentDetails_userDetails_UserId",
                         column: x => x.UserId,
                         principalTable: "userDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +126,7 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     StudyCenterCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Subjects = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -141,7 +141,7 @@ namespace AssignmentSubmission.DAL.Migrations
                         column: x => x.UserId,
                         principalTable: "userDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,9 +150,9 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     AssignmentsCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CourseId = table.Column<int>(type: "int", nullable: true),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
                     Marks = table.Column<int>(type: "int", nullable: false),
                     VivaMarks = table.Column<int>(type: "int", nullable: false),
                     CheckedBy = table.Column<int>(type: "int", nullable: false),
@@ -170,13 +170,13 @@ namespace AssignmentSubmission.DAL.Migrations
                         column: x => x.CourseId,
                         principalTable: "courseDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_assignmentSubmissionDetails_userDetails_UserId",
                         column: x => x.UserId,
                         principalTable: "userDetails",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -195,9 +195,9 @@ namespace AssignmentSubmission.DAL.Migrations
                 column: "ProgramDetailsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_studentDetails_ProgramId",
+                name: "IX_studentDetails_ProgramDetailsId",
                 table: "studentDetails",
-                column: "ProgramId");
+                column: "ProgramDetailsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_studentDetails_UserId",
