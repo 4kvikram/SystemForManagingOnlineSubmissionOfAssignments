@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AssignmentSubmission.BAL.Constants;
+
 namespace AssignmentSubmission.Controllers
 {
     public class AuthController : Controller
     {
         private readonly ILogger<AuthController> _logger;
         private readonly IMainDBUnitOfWork _IMainDBUnitOfWork;
+     
         public AuthController(
             ILogger<AuthController> logger,
             IMainDBUnitOfWork mainDBUnitOfWork
@@ -33,7 +35,6 @@ namespace AssignmentSubmission.Controllers
         public IActionResult Login()
         {
             HttpContext.Session.SetString("User", "The Doctor");
-
             return View();
         }
         [HttpPost]
@@ -51,8 +52,8 @@ namespace AssignmentSubmission.Controllers
                     Id=res.Id,
                     Phone=res.Phone
                 };
-                string userdata = JsonSerializer.Serialize(activeUserModel);
-                HttpContext.Session.SetString("ActiveUser", userdata);
+               string userdata = JsonSerializer.Serialize(activeUserModel);
+               HttpContext.Session.SetString("ActiveUser", userdata);
             }
             return View();
         }
@@ -118,9 +119,10 @@ namespace AssignmentSubmission.Controllers
             }
             return View(response);
         }
-        public void LogOut()
+        public IActionResult LogOut()
         {
             HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
         public string getuserName()
         {
