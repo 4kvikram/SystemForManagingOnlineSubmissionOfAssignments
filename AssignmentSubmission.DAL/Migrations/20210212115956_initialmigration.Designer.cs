@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentSubmission.DAL.Migrations
 {
     [DbContext(typeof(AssgnmentDBContext))]
-    [Migration("20210207070317_initialMigration")]
-    partial class initialMigration
+    [Migration("20210212115956_initialmigration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,7 +63,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("CheckedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfCreated")
@@ -84,7 +84,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.Property<int>("VivaMarks")
@@ -180,7 +180,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("EnrollmentNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProgramId")
+                    b.Property<int>("ProgramDetailsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -189,12 +189,12 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("StudyCenterCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgramId");
+                    b.HasIndex("ProgramDetailsId");
 
                     b.HasIndex("UserId");
 
@@ -224,7 +224,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("Subjects")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -295,11 +295,15 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     b.HasOne("AssignmentSubmission.DAL.Models.CourseDetails", "CourseDetails")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CourseDetails");
 
@@ -319,15 +323,19 @@ namespace AssignmentSubmission.DAL.Migrations
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
                 {
-                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramsDetails")
+                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
                         .WithMany()
-                        .HasForeignKey("ProgramId");
+                        .HasForeignKey("ProgramDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ProgramsDetails");
+                    b.Navigation("ProgramDetails");
 
                     b.Navigation("UserDetails");
                 });
@@ -336,7 +344,9 @@ namespace AssignmentSubmission.DAL.Migrations
                 {
                     b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("UserDetails");
                 });
