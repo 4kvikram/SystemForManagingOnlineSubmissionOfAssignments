@@ -1,11 +1,8 @@
 ﻿using AssignmentSubmission.BAL.Models;
 using AssignmentSubmission.DAL.Repositories;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-
 namespace AssignmentSubmission.BAL.Services
 {
     public class MasterService
