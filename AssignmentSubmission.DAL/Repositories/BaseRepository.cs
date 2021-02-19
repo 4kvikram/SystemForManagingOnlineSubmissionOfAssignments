@@ -16,16 +16,20 @@ namespace AssignmentSubmission.DAL.Repositories
         {
             _dbContext = context;
             Dbset = context.Set<T>();
-        }
+        }   
         public T GetById(int id)
         {
             //var i= (from a in Dbset where  a.ID == id select a)
             return Dbset.Find(id);
         }
 
-        public async Task<IQueryable<T>> GetAll()
+        public async Task<IQueryable<T>> GetAllAsync()
         {
             return await Task.FromResult(Dbset);
+        }
+        public IQueryable<T> GetAll()
+        {
+            return Dbset; 
         }
 
         public void Insert(T entity)

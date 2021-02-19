@@ -8,7 +8,8 @@ namespace AssignmentSubmission.DAL.Repositories
 {
     public interface IBaseRepository<T> : IDisposable
     {
-        Task<IQueryable<T>> GetAll();
+        Task<IQueryable<T>> GetAllAsync();
+        IQueryable<T> GetAll();
 
         T GetById(int id);
 

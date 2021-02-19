@@ -25,7 +25,7 @@ namespace AssignmentSubmission.Controllers
 
         public IActionResult Index()
         {
-            var data=_IMainDBUnitOfWork.UserDetailsRepository.GetAll();
+            var data=_IMainDBUnitOfWork.UserDetailsRepository.GetAllAsync();
             return View();
         }
 

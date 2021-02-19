@@ -1,0 +1,100 @@
+﻿@model StudentModel
+
+
+<div class="container jumbotron">
+
+    <form method="post">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <label for="signupFirstName">First Name:</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Enter first name"
+                       id="signupFirstName"
+                       name="FirstName"
+                       value="@Model.FirstName"
+                       readonly="readonly" />
+            </div>
+            <div class="col-6">
+                <label for="signupLastName">Last Name:</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Enter last name"
+                       id="signupLastName"
+                       name="LastName"
+                       value="@Model.LastName"
+                       readonly="readonly" />
+            </div>
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <label for="usertype">Gender: </label>
+                <input type="text"
+                       class="form-control"
+                       value="@(Model.Gender==1?"Male":Model.Gender==2?"Female":"Other")"
+                       readonly="readonly">
+            </div>
+            <div class="col-6">
+                <label for="signupphone">Mobile:</label>
+                <input type="text"
+                       class="form-control"
+                       placeholder="Enter mobile no."
+                       id="signupphone"
+                       name="Phone"
+                       value="@Model.Phone"
+                       readonly="readonly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="signupemail">Email address:</label>
+            <input type="email"
+                   class="form-control"
+                   placeholder="Enter email"
+                   id="signupemail"
+                   required
+                   name="Email"
+                   value="@Model.Email"
+                   readonly="readonly">
+            <small id="signupEmailValidation"
+                   class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="EnrollmentNo">Enrollment No.:</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Enter Enrollment Number"
+                   id="EnrollmentNo"
+                   name="EnrollmentNo"
+                   value="@Model.EnrollmentNo">
+            <small id="EnrollmentNoErrorMsg"
+                   class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="DOB">DOB :</label>
+            <input type="date"
+                   class="form-control"
+                   id="DOB"
+                   name="DOB"
+                   value="@Model.DOB">
+            <small id="DOBErrorMsg"
+                   class="text-danger"></small>
+        </div>
+        <div class="form-group">
+            <label for="StudyCenterCode">Study Center Code:</label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Enter Study Center Code"
+                   id="StudyCenterCode"
+                   name="StudyCenterCode"
+                   value="@Model.StudyCenterCode">
+            <small id="StudyCenterCodeErrorMsg"
+                   class="text-danger"></small>
+        </div>
+        <input type="text" style="visibility:hidden" name="UserId" value="@Model.UserId" />
+        <input type="submit" class="btn btn-primary" value="Save" />
+    </form>
+</div>
+
+
+

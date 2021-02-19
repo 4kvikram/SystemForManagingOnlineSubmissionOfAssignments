@@ -1,11 +1,8 @@
 ﻿using AssignmentSubmission.BAL.Models;
 using AssignmentSubmission.DAL.Repositories;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-
 namespace AssignmentSubmission.BAL.Services
 {
     public class MasterService
@@ -24,7 +21,7 @@ namespace AssignmentSubmission.BAL.Services
         public async Task<ResponseModel> GetAllPrograms()
         {
 
-            var result = (await _IMainDBUnitOfWork.ProgramsDetailsRepository.GetAll());
+            var result = (await _IMainDBUnitOfWork.ProgramsDetailsRepository.GetAllAsync());
             if (result != null)
             {
                 List<ProgramModel> programModels = new List<ProgramModel>();
@@ -59,7 +56,7 @@ namespace AssignmentSubmission.BAL.Services
         public async Task<List<CourseModel>> GetAllCourse()
         {
 
-            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAll());
+            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAllAsync());
             if (result != null)
             {
                 List<CourseModel> courseModels = new List<CourseModel>();

@@ -18,7 +18,7 @@ namespace AssignmentSubmission.Controllers
     {
         private readonly ILogger<AuthController> _logger;
         private readonly IMainDBUnitOfWork _IMainDBUnitOfWork;
-     
+
         public AuthController(
             ILogger<AuthController> logger,
             IMainDBUnitOfWork mainDBUnitOfWork
@@ -27,10 +27,7 @@ namespace AssignmentSubmission.Controllers
             _logger = logger;
             _IMainDBUnitOfWork = mainDBUnitOfWork;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -40,27 +37,28 @@ namespace AssignmentSubmission.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
-            var res = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAll()).Where(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.Status==Status.Active).FirstOrDefault();
+            var res = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAllAsync()).Where(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.Status == Status.Active).FirstOrDefault();
             if (res != null)
             {
                 ActiveUserModel activeUserModel = new ActiveUserModel
                 {
-                    Email=res.Email,
-                    FirstName=res.FirstName,
-                    LastName=res.LastName,
-                    Role=res.Role,
-                    Id=res.Id,
-                    Phone=res.Phone
+                    Email = res.Email,
+                    FirstName = res.FirstName,
+                    LastName = res.LastName,
+                    Role = res.Role,
+                    Id = res.Id,
+                    Phone = res.Phone,
+                    Gender = res.Gender
                 };
-               string userdata = JsonSerializer.Serialize(activeUserModel);
-               HttpContext.Session.SetString("ActiveUser", userdata);
+                string userdata = JsonSerializer.Serialize(activeUserModel);
+                HttpContext.Session.SetString("ActiveUser", userdata);
             }
             return View();
         }
         [HttpGet]
         public IActionResult Registration()
         {
-            var data= HttpContext.Session.GetString("User");
+            var data = HttpContext.Session.GetString("User");
             ResponseModel response = new ResponseModel
             {
                 Success = true,
@@ -72,7 +70,7 @@ namespace AssignmentSubmission.Controllers
         public async Task<IActionResult> Registration(RegistrationModel registrationModel)
         {
             ResponseModel response = new ResponseModel();
-            var ExistUser = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAll()).Where(x => x.Email == registrationModel.Email).FirstOrDefault();
+            var ExistUser = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAllAsync()).Where(x => x.Email == registrationModel.Email).FirstOrDefault();
             if (ExistUser == null)
             {
                 UserDetails user = new UserDetails
@@ -85,8 +83,8 @@ namespace AssignmentSubmission.Controllers
                     Gender = registrationModel.Gender,
                     Password = registrationModel.Password,
                     Phone = registrationModel.Phone,
-                    Role=Role.User,
-                    Status=Status.Active
+                    Role = Role.User,
+                    Status = Status.Active
                 };
                 _IMainDBUnitOfWork.UserDetailsRepository.Insert(user);
                 var res = await _IMainDBUnitOfWork.SaveAsync();
@@ -124,9 +122,68 @@ namespace AssignmentSubmission.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
-        public string getuserName()
+
+        [HttpGet]
+        public IActionResult UserProfile()
         {
-            return "vikram";
+            StudentModel studentModel = new StudentModel();
+            var x = HttpContext.Session.GetString("ActiveUser");
+            if (x != null)
+            {
+                ActiveUserModel userData = new ActiveUserModel();
+                userData = JsonSerializer.Deserialize<ActiveUserModel>(x);
+                if (!string.IsNullOrEmpty(userData.Email))
+                {
+                    studentModel.Email = userData.Email;
+                    studentModel.FirstName = userData.FirstName;
+                    studentModel.LastName = userData.LastName;
+                    studentModel.Phone = userData.Phone;
+                    studentModel.Role = userData.Role;
+                    studentModel.Gender = userData.Gender;
+                    studentModel.UserId = userData.Id;
+
+                }
+                var studentProfile = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().
+                    Where(x=>x.UserId==userData.Id).FirstOrDefault();
+                if (studentProfile != null)
+                {
+                    studentModel.Id = studentProfile.Id;
+                    studentModel.ProgramDetailsId = studentProfile.ProgramDetailsId;
+                    studentModel.Status = studentProfile.Status;
+                    studentModel.UserId = studentProfile.UserId;
+                    studentModel.DOB = studentProfile.DOB;
+                    studentModel.StudyCenterCode = studentProfile.StudyCenterCode;
+                    studentModel.EnrollmentNo = studentProfile.EnrollmentNo;
+                }
+            }
+            return View(studentModel);
+        }
+        [HttpPost]
+        public IActionResult UserProfile(StudentModel studentModel)
+        {
+            if (studentModel.UserId != 0 && !string.IsNullOrEmpty(studentModel.Email))
+            {
+                var result = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().Where(x=>x.UserId==studentModel.UserId).FirstOrDefault();
+                StudentDetails studentDetails = new StudentDetails();
+                studentDetails.UserId = studentModel.UserId;
+                studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
+                studentDetails.Status = Status.Active;
+                studentDetails.StudyCenterCode = studentModel.StudyCenterCode;
+                studentDetails.DOB = studentModel.DOB;
+                studentDetails.DateOfCreated = DateTime.Now;
+                studentDetails.DateOfModify = DateTime.Now;
+                if (result!=null)
+                {
+                    studentDetails.Id = result.Id;
+                    _IMainDBUnitOfWork.StudentDetailsRepository.Update(studentDetails);
+                }
+                else
+                {
+                    _IMainDBUnitOfWork.StudentDetailsRepository.Insert(studentDetails);
+                    _IMainDBUnitOfWork.Save();
+                }
+            }
+            return RedirectToAction("UserProfile");
         }
     }
 }
