@@ -14,6 +14,7 @@ namespace AssignmentSubmission.BAL.Models
         public string Email { get; set; } = string.Empty;
 
         public string Phone { get; set; } = string.Empty;
+        public int Gender { get; set; } = 0;
         public int Role { get; set; } = 0;
     }
 }

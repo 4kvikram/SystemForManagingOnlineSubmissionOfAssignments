@@ -37,7 +37,7 @@ namespace AssignmentSubmission.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {
-            var res = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAll()).Where(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.Status == Status.Active).FirstOrDefault();
+            var res = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAllAsync()).Where(x => x.Email == loginModel.Email && x.Password == loginModel.Password && x.Status == Status.Active).FirstOrDefault();
             if (res != null)
             {
                 ActiveUserModel activeUserModel = new ActiveUserModel
@@ -47,7 +47,8 @@ namespace AssignmentSubmission.Controllers
                     LastName = res.LastName,
                     Role = res.Role,
                     Id = res.Id,
-                    Phone = res.Phone
+                    Phone = res.Phone,
+                    Gender = res.Gender
                 };
                 string userdata = JsonSerializer.Serialize(activeUserModel);
                 HttpContext.Session.SetString("ActiveUser", userdata);
@@ -69,7 +70,7 @@ namespace AssignmentSubmission.Controllers
         public async Task<IActionResult> Registration(RegistrationModel registrationModel)
         {
             ResponseModel response = new ResponseModel();
-            var ExistUser = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAll()).Where(x => x.Email == registrationModel.Email).FirstOrDefault();
+            var ExistUser = (await _IMainDBUnitOfWork.UserDetailsRepository.GetAllAsync()).Where(x => x.Email == registrationModel.Email).FirstOrDefault();
             if (ExistUser == null)
             {
                 UserDetails user = new UserDetails
@@ -138,8 +139,12 @@ namespace AssignmentSubmission.Controllers
                     studentModel.LastName = userData.LastName;
                     studentModel.Phone = userData.Phone;
                     studentModel.Role = userData.Role;
+                    studentModel.Gender = userData.Gender;
+                    studentModel.UserId = userData.Id;
+
                 }
-                var studentProfile = _IMainDBUnitOfWork.StudentDetailsRepository.GetById(userData.Id);
+                var studentProfile = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().
+                    Where(x=>x.UserId==userData.Id).FirstOrDefault();
                 if (studentProfile != null)
                 {
                     studentModel.Id = studentProfile.Id;
@@ -156,7 +161,29 @@ namespace AssignmentSubmission.Controllers
         [HttpPost]
         public IActionResult UserProfile(StudentModel studentModel)
         {
-            return View();
+            if (studentModel.UserId != 0 && !string.IsNullOrEmpty(studentModel.Email))
+            {
+                var result = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().Where(x=>x.UserId==studentModel.UserId).FirstOrDefault();
+                StudentDetails studentDetails = new StudentDetails();
+                studentDetails.UserId = studentModel.UserId;
+                studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
+                studentDetails.Status = Status.Active;
+                studentDetails.StudyCenterCode = studentModel.StudyCenterCode;
+                studentDetails.DOB = studentModel.DOB;
+                studentDetails.DateOfCreated = DateTime.Now;
+                studentDetails.DateOfModify = DateTime.Now;
+                if (result!=null)
+                {
+                    studentDetails.Id = result.Id;
+                    _IMainDBUnitOfWork.StudentDetailsRepository.Update(studentDetails);
+                }
+                else
+                {
+                    _IMainDBUnitOfWork.StudentDetailsRepository.Insert(studentDetails);
+                    _IMainDBUnitOfWork.Save();
+                }
+            }
+            return RedirectToAction("UserProfile");
         }
     }
 }

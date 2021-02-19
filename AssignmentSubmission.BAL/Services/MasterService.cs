@@ -21,7 +21,7 @@ namespace AssignmentSubmission.BAL.Services
         public async Task<ResponseModel> GetAllPrograms()
         {
 
-            var result = (await _IMainDBUnitOfWork.ProgramsDetailsRepository.GetAll());
+            var result = (await _IMainDBUnitOfWork.ProgramsDetailsRepository.GetAllAsync());
             if (result != null)
             {
                 List<ProgramModel> programModels = new List<ProgramModel>();
@@ -56,7 +56,7 @@ namespace AssignmentSubmission.BAL.Services
         public async Task<List<CourseModel>> GetAllCourse()
         {
 
-            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAll());
+            var result = (await _IMainDBUnitOfWork.CourseDetailsRepository.GetAllAsync());
             if (result != null)
             {
                 List<CourseModel> courseModels = new List<CourseModel>();
