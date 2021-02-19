@@ -31,7 +31,7 @@ namespace AssignmentSubmission
             services.AddTransient<MasterService>();
             services.AddControllersWithViews();
             services.AddDbContext<AssgnmentDBContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
             services.AddScoped<IMainDBUnitOfWork, MainDBUnitOfWork>(); services.AddDistributedMemoryCache();
 
             services.AddSession(options =>

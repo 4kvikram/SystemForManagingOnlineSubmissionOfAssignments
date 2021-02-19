@@ -8,11 +8,11 @@ namespace AssignmentSubmission.DAL.Models
 {
     public class UserDetails
     {
-        [Column("Id")]
+        [Column("UserId")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public int UserId { get; set; }
         [Column("FirstName")]
         [Required]
         [StringLength(50)]

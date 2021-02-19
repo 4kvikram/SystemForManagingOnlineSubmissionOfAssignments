@@ -4,14 +4,16 @@ using AssignmentSubmission.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AssignmentSubmission.DAL.Migrations
 {
     [DbContext(typeof(AssgnmentDBContext))]
-    partial class AssgnmentDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210219095832_initial-migraiton")]
+    partial class initialmigraiton
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<DateTime>("DateOfModify")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProgramId")
+                    b.Property<int>("ProgramDetailsId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -122,6 +124,8 @@ namespace AssignmentSubmission.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CourseId");
+
+                    b.HasIndex("ProgramDetailsId");
 
                     b.ToTable("courseDetails");
                 });
@@ -187,6 +191,8 @@ namespace AssignmentSubmission.DAL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudentId");
+
+                    b.HasIndex("StudentProgramId");
 
                     b.ToTable("studentDetails");
                 });
@@ -288,6 +294,28 @@ namespace AssignmentSubmission.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseDetails");
+                });
+
+            modelBuilder.Entity("AssignmentSubmission.DAL.Models.CourseDetails", b =>
+                {
+                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
+                        .WithMany()
+                        .HasForeignKey("ProgramDetailsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProgramDetails");
+                });
+
+            modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
+                {
+                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
+                        .WithMany()
+                        .HasForeignKey("StudentProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProgramDetails");
                 });
 #pragma warning restore 612, 618
         }

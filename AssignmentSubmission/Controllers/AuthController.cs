@@ -46,7 +46,7 @@ namespace AssignmentSubmission.Controllers
                     FirstName = res.FirstName,
                     LastName = res.LastName,
                     Role = res.Role,
-                    Id = res.Id,
+                    Id = res.UserId,
                     Phone = res.Phone,
                     Gender = res.Gender
                 };
@@ -144,11 +144,11 @@ namespace AssignmentSubmission.Controllers
 
                 }
                 var studentProfile = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().
-                    Where(x=>x.UserId==userData.Id).FirstOrDefault();
+                    Where(x => x.UserId == userData.Id).FirstOrDefault();
                 if (studentProfile != null)
                 {
-                    studentModel.Id = studentProfile.Id;
-                    studentModel.ProgramDetailsId = studentProfile.ProgramDetailsId;
+                    studentModel.Id = studentProfile.StudentId;
+                    studentModel.ProgramDetailsId = studentProfile.StudentProgramId;
                     studentModel.Status = studentProfile.Status;
                     studentModel.UserId = studentProfile.UserId;
                     studentModel.DOB = studentProfile.DOB;
@@ -163,22 +163,26 @@ namespace AssignmentSubmission.Controllers
         {
             if (studentModel.UserId != 0 && !string.IsNullOrEmpty(studentModel.Email))
             {
-                var result = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().Where(x=>x.UserId==studentModel.UserId).FirstOrDefault();
+                var result = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().Where(x => x.UserId == studentModel.UserId).FirstOrDefault();
                 StudentDetails studentDetails = new StudentDetails();
-                studentDetails.UserId = studentModel.UserId;
-                studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
+               // studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
                 studentDetails.Status = Status.Active;
                 studentDetails.StudyCenterCode = studentModel.StudyCenterCode;
+                studentDetails.EnrollmentNo = studentModel.EnrollmentNo;
+                studentDetails.StudentProgramId = 2;
                 studentDetails.DOB = studentModel.DOB;
                 studentDetails.DateOfCreated = DateTime.Now;
                 studentDetails.DateOfModify = DateTime.Now;
-                if (result!=null)
+                if (result != null)
                 {
-                    studentDetails.Id = result.Id;
+
+                    studentDetails.StudentId = result.StudentId;
                     _IMainDBUnitOfWork.StudentDetailsRepository.Update(studentDetails);
+                    _IMainDBUnitOfWork.Save();
                 }
                 else
                 {
+                    studentDetails.UserId = studentModel.UserId;
                     _IMainDBUnitOfWork.StudentDetailsRepository.Insert(studentDetails);
                     _IMainDBUnitOfWork.Save();
                 }

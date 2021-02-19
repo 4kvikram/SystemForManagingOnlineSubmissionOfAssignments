@@ -130,12 +130,12 @@ namespace AssignmentSubmission.Controllers
                 var data = _IMainDBUnitOfWork.CourseDetailsRepository.GetById(Id);
                 CourseModel courseModel = new CourseModel() 
                 {
-                    Id = data.Id,
+                    Id = data.CourseId,
                     Code = data.Coursecode,
-                    ProgramId = data.ProgramDetailsId,
+                    ProgramId = data.ProgramId,
                     Title = data.Title
                 };
-                var defaultValue = ((List<ProgramModel>)programs.data).Where(x => x.Id == data.ProgramDetailsId).FirstOrDefault();
+                var defaultValue = ((List<ProgramModel>)programs.data).Where(x => x.Id == data.ProgramId).FirstOrDefault();
                 selectLists = new SelectList((List<ProgramModel>)programs.data, "Id", "ProgramName", defaultValue);
                 dropDown.DropDownData = selectLists;
                 dropDown.Data = courseModel;
@@ -150,8 +150,8 @@ namespace AssignmentSubmission.Controllers
             {
                 CourseDetails course = new CourseDetails()
                 {
-                    Id=courseModel.Id,
-                    ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(courseModel.ProgramId),
+                    CourseId=courseModel.Id,
+                    ProgramId = courseModel.ProgramId,
                     Coursecode = courseModel.Code,
                     Title = courseModel.Title,
                     DateOfModify = DateTime.Now
@@ -164,7 +164,7 @@ namespace AssignmentSubmission.Controllers
 
                 CourseDetails course = new CourseDetails()
                 {
-                    ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(courseModel.ProgramId),
+                    ProgramId = courseModel.ProgramId,
                     Coursecode = courseModel.Code,
                     Title = courseModel.Title,
                     DateOfModify = DateTime.Now,
