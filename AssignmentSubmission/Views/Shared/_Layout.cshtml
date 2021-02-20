@@ -26,7 +26,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">AssignmentSubmission</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -36,19 +36,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
 
                         @if (string.IsNullOrEmpty(userData.Email))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Registration">Registration</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Registration">Registration</a>
                             </li>
                         }
                         else
@@ -57,10 +57,10 @@
                             @if (userData.Role == Role.Admin)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Master" asp-action="GetAllProgram">Manage Program</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Master" asp-action="GetAllProgram">Manage Program</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Master" asp-action="GetAllCourses">Manage Course</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Master" asp-action="GetAllCourses">Manage Course</a>
                                 </li>
                             }
                             else
@@ -102,7 +102,7 @@
             <div>
                 @if (!string.IsNullOrEmpty(userData.Email))
                 {
-                    <h6>Welcome: @userData.FirstName</h6>
+                    <h6 class="text-white">Welcome: @userData.FirstName</h6>
                 }
             </div>
         </nav>
@@ -152,7 +152,8 @@
             <!-- Copyright -->
             <div class="footer-copyright  bg-info text-center py-3">
                 © 2020 Copyright:
-                <a href="#" class="btn text-white"> Jobportal.com</a>
+                <a href="#" class="btn text-white">Assignment.somee.com</a>
+                <p>Developed  By Vikram</p>
             </div>
             <!-- Copyright -->
         </footer>
