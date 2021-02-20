@@ -64,11 +64,11 @@ namespace AssignmentSubmission.BAL.Services
                 {
                     courseModels.Add(new CourseModel()
                     {
-                        Id = item.Id,
+                        Id = item.CourseId,
                         Code = item.Coursecode,
                         Title = item.Title,
-                        ProgramId = item.ProgramDetailsId,
-                        ProgramCode = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(item.ProgramDetailsId)?.Code
+                        ProgramId = item.ProgramId,
+                        ProgramCode = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(item.ProgramId)?.Code
                     }); 
                 }
                 return courseModels;

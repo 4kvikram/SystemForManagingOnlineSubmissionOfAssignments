@@ -8,18 +8,13 @@ namespace AssignmentSubmission.DAL.Models
 {
     public class TeacherDetails
     {
-        [Column("Id")]
+        [Column("TeacherId")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int Id { get; set; }
+        public int TeacherId { get; set; }
 
-        //Foreign Key
-        [Display(Name = "UserDetails")]
-        public virtual int UserId { get; set; }
-
-        [ForeignKey("UserId")]
-        public virtual UserDetails UserDetails { get; set; }
+        public  int UserId { get; set; }
         public string StudyCenterCode { get; set; }
         public string Subjects { get; set; }
         public int Status { get; set; }

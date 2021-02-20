@@ -21,10 +21,10 @@ namespace AssignmentSubmission.DAL.Migrations
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.AssignmentDateSetting", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AssignmentDateSettingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("AssignmentDateSettingId")
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("DateOfCreated")
@@ -42,17 +42,17 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AssignmentDateSettingId");
 
                     b.ToTable("assignmentDateSettings");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.AssignmentSubmissionDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AssignmentSubmissionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("AssignmentSubmissionId")
                         .UseIdentityColumn();
 
                     b.Property<string>("AssignmentsCode")
@@ -88,21 +88,19 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("VivaMarks")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("AssignmentSubmissionId");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("assignmentSubmissionDetails");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.CourseDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("CourseId")
                         .UseIdentityColumn();
 
                     b.Property<string>("Coursecode")
@@ -114,7 +112,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<DateTime>("DateOfModify")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProgramDetailsId")
+                    b.Property<int>("ProgramId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -123,9 +121,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProgramDetailsId");
+                    b.HasKey("CourseId");
 
                     b.ToTable("courseDetails");
                 });
@@ -135,7 +131,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("ProgramId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("ProgramId")
                         .UseIdentityColumn();
 
                     b.Property<string>("Code")
@@ -160,10 +156,10 @@ namespace AssignmentSubmission.DAL.Migrations
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("StudentId")
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("DOB")
@@ -178,10 +174,10 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<string>("EnrollmentNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProgramDetailsId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("StudentProgramId")
                         .HasColumnType("int");
 
                     b.Property<string>("StudyCenterCode")
@@ -190,21 +186,17 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProgramDetailsId");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("StudentId");
 
                     b.ToTable("studentDetails");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.TeacherDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("TeacherId")
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("DateOfCreated")
@@ -225,19 +217,17 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("TeacherId");
 
                     b.ToTable("teacherDetails");
                 });
 
             modelBuilder.Entity("AssignmentSubmission.DAL.Models.UserDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("Id")
+                        .HasColumnName("UserId")
                         .UseIdentityColumn();
 
                     b.Property<DateTime>("DateOfCreated")
@@ -284,7 +274,7 @@ namespace AssignmentSubmission.DAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("userDetails");
                 });
@@ -297,56 +287,7 @@ namespace AssignmentSubmission.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("CourseDetails");
-
-                    b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("AssignmentSubmission.DAL.Models.CourseDetails", b =>
-                {
-                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
-                        .WithMany()
-                        .HasForeignKey("ProgramDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProgramDetails");
-                });
-
-            modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
-                {
-                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
-                        .WithMany()
-                        .HasForeignKey("ProgramDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProgramDetails");
-
-                    b.Navigation("UserDetails");
-                });
-
-            modelBuilder.Entity("AssignmentSubmission.DAL.Models.TeacherDetails", b =>
-                {
-                    b.HasOne("AssignmentSubmission.DAL.Models.UserDetails", "UserDetails")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("UserDetails");
                 });
 #pragma warning restore 612, 618
         }

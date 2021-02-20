@@ -8,7 +8,7 @@ namespace AssignmentSubmission.DAL.Models
 {
     public class ProgramsDetails
     {
-        [Column("Id")]
+        [Column("ProgramId")]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
