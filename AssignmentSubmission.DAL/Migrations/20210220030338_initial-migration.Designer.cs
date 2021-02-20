@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AssignmentSubmission.DAL.Migrations
 {
     [DbContext(typeof(AssgnmentDBContext))]
-    [Migration("20210219100654_initial-migraiton1")]
-    partial class initialmigraiton1
+    [Migration("20210220030338_initial-migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -190,8 +190,6 @@ namespace AssignmentSubmission.DAL.Migrations
 
                     b.HasKey("StudentId");
 
-                    b.HasIndex("StudentProgramId");
-
                     b.ToTable("studentDetails");
                 });
 
@@ -292,17 +290,6 @@ namespace AssignmentSubmission.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseDetails");
-                });
-
-            modelBuilder.Entity("AssignmentSubmission.DAL.Models.StudentDetails", b =>
-                {
-                    b.HasOne("AssignmentSubmission.DAL.Models.ProgramsDetails", "ProgramDetails")
-                        .WithMany()
-                        .HasForeignKey("StudentProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProgramDetails");
                 });
 #pragma warning restore 612, 618
         }
