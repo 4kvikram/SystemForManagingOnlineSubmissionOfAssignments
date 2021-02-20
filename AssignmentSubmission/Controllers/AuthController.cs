@@ -62,7 +62,7 @@ namespace AssignmentSubmission.Controllers
             ResponseModel response = new ResponseModel
             {
                 Success = true,
-                Message = $"Welcome"
+                Message = $"Registre Here.."
             };
             return View(response);
         }
