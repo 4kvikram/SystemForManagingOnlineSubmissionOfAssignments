@@ -165,7 +165,7 @@ namespace AssignmentSubmission.Controllers
             {
                 var result = _IMainDBUnitOfWork.StudentDetailsRepository.GetAll().Where(x => x.UserId == studentModel.UserId).FirstOrDefault();
                 StudentDetails studentDetails = new StudentDetails();
-               // studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
+                // studentDetails.ProgramDetails = _IMainDBUnitOfWork.ProgramsDetailsRepository.GetById(studentModel.ProgramDetailsId);
                 studentDetails.Status = Status.Active;
                 studentDetails.StudyCenterCode = studentModel.StudyCenterCode;
                 studentDetails.EnrollmentNo = studentModel.EnrollmentNo;
@@ -188,6 +188,38 @@ namespace AssignmentSubmission.Controllers
                 }
             }
             return RedirectToAction("UserProfile");
+        }
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            ResponseModel responseModel = new ResponseModel
+            {
+                data = null,
+                Message = ""
+            };
+            return View(responseModel);
+        }
+        [HttpPost]
+        public IActionResult ResetPassword(PasswordResetModel passwordResetModel)
+        {
+            ResponseModel responseModel = new ResponseModel();
+            var x = HttpContext.Session.GetString("ActiveUser");
+            if (x != null)
+            {
+                ActiveUserModel userData = new ActiveUserModel();
+                userData = JsonSerializer.Deserialize<ActiveUserModel>(x);
+                UserDetails user = _IMainDBUnitOfWork.UserDetailsRepository.GetAll().Where
+                    (x => x.Email == userData.Email && x.Password == passwordResetModel.OldPassword).FirstOrDefault();
+                if (user != null)
+                {
+                    user.Password = passwordResetModel.NewPassword;
+                    _IMainDBUnitOfWork.UserDetailsRepository.Update(user);
+                    _IMainDBUnitOfWork.Save();
+                    responseModel.data = null;
+                    responseModel.Message = "Password Changed";
+                }
+            }
+            return View(responseModel);
         }
     }
 }
