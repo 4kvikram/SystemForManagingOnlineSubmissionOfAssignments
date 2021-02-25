@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentSubmission", "AssignmentSubmission\AssignmentSubmission.csproj", "{87034012-DB88-466B-B17A-A29BA262F593}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentSubmission.DAL", "AssignmentSubmission.DAL\AssignmentSubmission.DAL.csproj", "{D49B998E-459F-4BE7-98D9-69B18164ADC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentSubmission.DAL", "AssignmentSubmission.DAL\AssignmentSubmission.DAL.csproj", "{D49B998E-459F-4BE7-98D9-69B18164ADC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssignmentSubmission.BAL", "AssignmentSubmission.BAL\AssignmentSubmission.BAL.csproj", "{6BACE7C9-747D-4A3E-9EB4-1F36AD86D5BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssignmentSubmission.BAL", "AssignmentSubmission.BAL\AssignmentSubmission.BAL.csproj", "{6BACE7C9-747D-4A3E-9EB4-1F36AD86D5BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

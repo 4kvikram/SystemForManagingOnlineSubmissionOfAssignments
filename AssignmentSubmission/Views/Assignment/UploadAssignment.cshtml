@@ -1,0 +1,16 @@
+﻿<h2 class="text-center">Upload Your Assignment Here</h2>
+
+<form method="post" asp-action="UploadAssignment" enctype="multipart/form-data">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="Assignment1">First Name:</label>
+            <input type="file" class="form-control"  id="Assignment1" name="Assignment1">
+        </div>
+        @*<div class="col-6">
+            <label for="signupLastName">Last Name:</label>
+            <input type="file" class="form-control" placeholder="Enter last name" id="signupLastName" name="LastName">
+        </div>*@
+    </div>
+   
+    <input type="submit" class="btn btn-primary" value="Register" />
+</form>
