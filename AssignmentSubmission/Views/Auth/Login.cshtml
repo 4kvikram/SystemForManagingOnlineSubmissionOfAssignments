@@ -6,24 +6,27 @@
         <div class="fadeIn first">
             <img src="~/assets/images/avatar.jpg" id="icon" alt="User Icon" />
         </div>
-        <!-- Login Form -->
-        <form method="post" onsubmit="return validateForm()" >
-            <input type="text" id="login" class="form-control col-6" name="Email" placeholder="login">
-            <input type="password" id="password" class="form-control col-6" name="Password" placeholder="password">
-            <input type="submit" value="Log In">
-        </form>
-
+        <center>
+            <!-- Login Form -->
+            <form method="post" onsubmit="return validateForm()">
+                <input type="text" id="login" class="form-control col-6" name="Email" placeholder="login">
+                <br/>
+                <input type="password" id="password" class="form-control col-6" name="Password" placeholder="password">
+                <br/>
+                <input type="submit" value="Log In">
+            </form>
+        </center>
         <!-- Remind Passowrd -->
         <div id="formFooter">
-            <a class="underlineHover" href="#">Forgot Password?</a>
+            <br>
+            <a class="underlineHover"  asp-action="ForgetPassword" asp-controller="Auth">Forgot Password?</a>
         </div>
 
     </div>
 </div>
 <script>
-    function validateForm()
-    {
-       // alert("clicked");
+    function validateForm() {
+        // alert("clicked");
         return true;
     }
 </script>

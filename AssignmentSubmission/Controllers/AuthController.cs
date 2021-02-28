@@ -221,5 +221,31 @@ namespace AssignmentSubmission.Controllers
             }
             return View(responseModel);
         }
+
+        [HttpGet]
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult ForgetPassword(PasswordResetModel PRM)
+        {
+            ResponseModel responseModel = new ResponseModel();
+            var user=_IMainDBUnitOfWork.UserDetailsRepository.GetAll().Where(x => 
+            x.Email == PRM.Email && x.Phone == PRM.Phone).FirstOrDefault();
+            if (user!=null)
+            {
+                user.Password = PRM.NewPassword;
+                _IMainDBUnitOfWork.UserDetailsRepository.Update(user);
+                _IMainDBUnitOfWork.Save();
+
+                responseModel.Message="Password Reset Sussfully.."
+            }
+            else
+            {
+                responseModel.Message = "Please Enter Valid Email and Phone";
+            }
+            return View(responseModel);
+        }
     }
 }
