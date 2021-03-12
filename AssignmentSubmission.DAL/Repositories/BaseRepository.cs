@@ -16,7 +16,7 @@ namespace AssignmentSubmission.DAL.Repositories
         {
             _dbContext = context;
             Dbset = context.Set<T>();
-        }   
+        }
         public T GetById(int id)
         {
             //var i= (from a in Dbset where  a.ID == id select a)
@@ -29,12 +29,17 @@ namespace AssignmentSubmission.DAL.Repositories
         }
         public IQueryable<T> GetAll()
         {
-            return Dbset; 
+            return Dbset;
         }
 
         public void Insert(T entity)
         {
             Dbset.Add(entity);
+        }
+        public object Add(T entity)
+        {
+            var res = Dbset.Add(entity);
+            return res;
         }
 
         public void Update(T entity)

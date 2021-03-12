@@ -29,6 +29,8 @@ namespace AssignmentSubmission
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<MasterService>();
+            services.AddTransient<TeacherService>();
+            services.AddTransient<CourseService>();
             services.AddControllersWithViews();
             services.AddDbContext<AssgnmentDBContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
@@ -36,7 +38,7 @@ namespace AssignmentSubmission
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromSeconds(86400);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });

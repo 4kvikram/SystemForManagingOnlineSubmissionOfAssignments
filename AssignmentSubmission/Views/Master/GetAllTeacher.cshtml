@@ -1,0 +1,42 @@
+﻿@using AssignmentSubmission.BAL.Services
+@inject TeacherService TeacherService
+
+@{
+    var teacherData = TeacherService.GetAllTeachers();
+    int count = 1;
+}
+<h3 class="text-center"> Manage Teacher</h3>
+
+
+@Html.ActionLink("Add Teacher", "AddTeacher", "Master", null, new { @class = "btn btn-primary float-right" })
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Teacher's Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Study Centre</th>
+            <th scope="col">Subjects</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in teacherData)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td>@(item.FirstName+" "+item.LastName)</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+                <td>@item.StudyCenterCode</td>
+                <td>@item.Subjects</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditProgram", "Master", new { Id = item.TeacherId }, new { @class = "btn btn-info " })
+                    @Html.ActionLink("Delete", "DeleteProgram", "Master", new { Id = item.TeacherId }, new { @class = "btn btn-danger " })
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>

@@ -1,0 +1,98 @@
+﻿@using AssignmentSubmission.BAL.Services
+@inject CourseService CourseService
+@{
+
+    var courseDDL = CourseService.GetAllCourse();
+    SelectList selectLists = new SelectList(courseDDL, "Id", "Code");
+}
+
+<h2 class="text-center">Upload Your Assignment Here</h2>
+
+<form method="post" asp-action="UploadAssignment" enctype="multipart/form-data">
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="Course1">Select Course:</label>
+            @Html.DropDownList("Course1", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <label for="Assignment1">Select Assignment :</label>
+            <input type="file" class="form-control" id="Assignment1" name="Assignment1">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course2", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment2" name="Assignment2">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course3", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment3" name="Assignment3">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course4", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment4" name="Assignment4">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course5", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment5" name="Assignment5">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course6", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment6" name="Assignment6">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course7", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment7" name="Assignment7">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course8", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment8" name="Assignment8">
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @Html.DropDownList("Course9", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <input type="file" class="form-control" id="Assignment9" name="Assignment9">
+        </div>
+    </div>
+
+    <br />
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</form>

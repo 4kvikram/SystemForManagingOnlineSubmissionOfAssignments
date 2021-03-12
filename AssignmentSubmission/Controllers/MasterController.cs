@@ -19,15 +19,18 @@ namespace AssignmentSubmission.Controllers
         private readonly ILogger<MasterController> _logger;
         private readonly IMainDBUnitOfWork _IMainDBUnitOfWork;
         private readonly MasterService _masterService;
+        private readonly TeacherService _teacherService;
         public MasterController(
             ILogger<MasterController> logger,
             IMainDBUnitOfWork mainDBUnitOfWork,
-            MasterService masterService
-            )
+            MasterService masterService,
+            TeacherService teacherService
+            ) 
         {
             _logger = logger;
             _IMainDBUnitOfWork = mainDBUnitOfWork;
             _masterService = masterService;
+            _teacherService = teacherService;
         }
         #region Manage Program
         public async Task<IActionResult> GetAllProgram()
@@ -128,7 +131,7 @@ namespace AssignmentSubmission.Controllers
             if (Id != 0)
             {
                 var data = _IMainDBUnitOfWork.CourseDetailsRepository.GetById(Id);
-                CourseModel courseModel = new CourseModel() 
+                CourseModel courseModel = new CourseModel()
                 {
                     Id = data.CourseId,
                     Code = data.Coursecode,
@@ -150,7 +153,7 @@ namespace AssignmentSubmission.Controllers
             {
                 CourseDetails course = new CourseDetails()
                 {
-                    CourseId=courseModel.Id,
+                    CourseId = courseModel.Id,
                     ProgramId = courseModel.ProgramId,
                     Coursecode = courseModel.Code,
                     Title = courseModel.Title,
@@ -189,7 +192,23 @@ namespace AssignmentSubmission.Controllers
             return RedirectToAction("GetAllCourses");
         }
         #endregion
+        [HttpGet]
+        public IActionResult GetAllTeacher()
+        {
+            return View();
+        }
 
+        [HttpGet]
+        public IActionResult AddTeacher()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddTeacher(TeacherModel teacherModel)
+        {
+            _teacherService.AddTeacher(teacherModel);
+            return View();
+        }
 
     }
 }

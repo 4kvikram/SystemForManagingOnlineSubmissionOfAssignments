@@ -1,0 +1,47 @@
+﻿
+
+<form method="post">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="signupFirstName">First Name:</label>
+            <input type="text" class="form-control" placeholder="Enter first name" id="signupFirstName" name="FirstName">
+        </div>
+        <div class="col-6">
+            <label for="signupLastName">Last Name:</label>
+            <input type="text" class="form-control" placeholder="Enter last name" id="signupLastName" name="LastName">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="usertype">Gender:</label>
+            <select class="select form-control" id="usertype" name="Gender">
+                <option value="1" selected="">Male</option>
+                <option value="2">Female</option>
+                <option value="3">Other</option>
+            </select>
+        </div>
+        <div class="col-6">
+            <label for="signupphone">Mobile:</label>
+            <input type="text" class="form-control" placeholder="Enter mobile no." id="signupphone" name="Phone">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="signupemail">Email address:</label>
+        <input type="email" class="form-control" placeholder="Enter email"
+               id="signupemail" required name="Email">
+        <small id="signupEmailValidation" class="text-danger"></small>
+
+    </div>
+
+    <div class="form-group">
+        <label for="signupPwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="signupPwd" name="Password">
+    </div>
+    <div class="form-group">
+        <label for="signupPwd">Confirm Password:</label>
+        <input type="password" class="form-control" placeholder="Confirm password"
+               id="signupConfPwd">
+        <small id="signupPwdValidation" class="text-danger"></small>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Register" />
+</form>
