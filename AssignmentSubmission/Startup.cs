@@ -29,6 +29,7 @@ namespace AssignmentSubmission
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<MasterService>();
+            services.AddTransient<TeacherService>();
             services.AddTransient<CourseService>();
             services.AddControllersWithViews();
             services.AddDbContext<AssgnmentDBContext>(options =>

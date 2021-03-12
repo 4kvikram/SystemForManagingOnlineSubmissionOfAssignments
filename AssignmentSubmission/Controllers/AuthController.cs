@@ -225,7 +225,8 @@ namespace AssignmentSubmission.Controllers
         [HttpGet]
         public IActionResult ForgetPassword()
         {
-            return View();
+            ResponseModel responseModel = new ResponseModel();
+            return View(responseModel);
         }
         [HttpPost]
         public IActionResult ForgetPassword(PasswordResetModel PRM)
@@ -239,7 +240,7 @@ namespace AssignmentSubmission.Controllers
                 _IMainDBUnitOfWork.UserDetailsRepository.Update(user);
                 _IMainDBUnitOfWork.Save();
 
-                responseModel.Message="Password Reset Sussfully.."
+                responseModel.Message = "Password Reset Sussfully..";
             }
             else
             {

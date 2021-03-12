@@ -16,6 +16,7 @@ namespace AssignmentSubmission.DAL.Repositories
         void Update(T entity);
 
         void Insert(T entity);
+        object Add(T entity);
 
         void Delete(T entity);
 
