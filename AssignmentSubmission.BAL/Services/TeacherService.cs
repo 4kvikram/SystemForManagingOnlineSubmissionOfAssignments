@@ -50,7 +50,6 @@ namespace AssignmentSubmission.BAL.Services
         }
         public bool AddTeacher(TeacherModel teacherModel)
         {
-
             if (teacherModel != null)
             {
                 UserDetails user = new UserDetails()
@@ -68,9 +67,48 @@ namespace AssignmentSubmission.BAL.Services
                 };
                 var res = _IMainDBUnitOfWork.UserDetailsRepository.Add(user);
                 _IMainDBUnitOfWork.Save();
-                var test = (UserDetails)res;
+                var data = _IMainDBUnitOfWork.UserDetailsRepository.GetAll().OrderBy(x => x.UserId).LastOrDefault();
+                if (data != null)
+                {
+                    TeacherDetails teacherDetails = new TeacherDetails()
+                    {
+                        StudyCenterCode = teacherModel.StudyCenterCode,
+                        Subjects = teacherModel.Subjects,
+                        UserId = data.UserId,
+                        DateOfCreated = DateTime.Now,
+                        DateOfModify = DateTime.Now,
+                        Status = Constants.Status.Active
+                    };
+                    _IMainDBUnitOfWork.TeacherDetailsRepository.Add(teacherDetails);
+                    _IMainDBUnitOfWork.Save();
+                }
+                return true;
             }
             return false;
+        }
+
+        public TeacherModel GetTeachersByUserId(int id)
+        {
+            var teachers = _IMainDBUnitOfWork.TeacherDetailsRepository.GetAll().Where(x => x.UserId == id).FirstOrDefault();
+            if (teachers != null)
+            {
+                var teacherUser = _IMainDBUnitOfWork.UserDetailsRepository.GetAll().Where(x => x.UserId == teachers.UserId).FirstOrDefault();
+                TeacherModel teacherModel = new TeacherModel()
+                {
+                    Email = teacherUser.Email,
+                    FirstName = teacherUser.FirstName,
+                    LastName = teacherUser.LastName,
+                    Phone = teacherUser.Phone,
+                    UserId = teacherUser.UserId,
+                    Gender = teacherUser.Gender,
+                    Password = teacherUser.Password,
+                    StudyCenterCode = teachers.StudyCenterCode,
+                    Subjects = teachers.Subjects,
+                    TeacherId = teachers.TeacherId
+                };
+                return teacherModel;
+            }
+            return null;
         }
     }
 }

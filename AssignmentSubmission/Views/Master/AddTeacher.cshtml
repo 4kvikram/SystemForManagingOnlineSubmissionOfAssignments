@@ -1,41 +1,63 @@
-﻿
+﻿@using AssignmentSubmission.BAL.Services
+@model TeacherModel 
+@inject CourseService CourseService
+@{
 
+    var courseDDL = CourseService.GetAllCourse();
+    SelectList selectLists = new SelectList(courseDDL, "Id", "Code");
+}
 <form method="post">
     <div class="row justify-content-center">
         <div class="col-6">
             <label for="signupFirstName">First Name:</label>
-            <input type="text" class="form-control" placeholder="Enter first name" id="signupFirstName" name="FirstName">
+            <input type="text" 
+                   class="form-control" 
+                   placeholder="Enter first name" 
+                   id="signupFirstName" 
+                   name="FirstName"
+                   value="@Model.FirstName">
         </div>
         <div class="col-6">
             <label for="signupLastName">Last Name:</label>
-            <input type="text" class="form-control" placeholder="Enter last name" id="signupLastName" name="LastName">
+            <input type="text" class="form-control" placeholder="Enter last name" id="signupLastName" name="LastName"
+                   value="@Model.LastName">
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-6">
             <label for="usertype">Gender:</label>
             <select class="select form-control" id="usertype" name="Gender">
-                <option value="1" selected="">Male</option>
+                <option value="1" >Male</option>
                 <option value="2">Female</option>
                 <option value="3">Other</option>
             </select>
         </div>
         <div class="col-6">
             <label for="signupphone">Mobile:</label>
-            <input type="text" class="form-control" placeholder="Enter mobile no." id="signupphone" name="Phone">
+            <input type="text" class="form-control" placeholder="Enter mobile no." id="signupphone" name="Phone" value="@Model.Phone">
         </div>
     </div>
     <div class="form-group">
         <label for="signupemail">Email address:</label>
         <input type="email" class="form-control" placeholder="Enter email"
-               id="signupemail" required name="Email">
+               id="signupemail" required name="Email" value="@Model.Email">
         <small id="signupEmailValidation" class="text-danger"></small>
 
     </div>
-
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <label for="Subjects">Select Course:</label>
+            @Html.DropDownList("Subjects", selectLists, "Select Course", new { @class = "select form-control" })
+        </div>
+        <div class="col-6">
+            <label for="signupphone">Study Center Code:</label>
+            <input type="text" class="form-control" placeholder="Enter Study Center Code" id="StudyCenterCode" name="StudyCenterCode"
+                   value="@Model.StudyCenterCode">
+        </div>
+    </div>
     <div class="form-group">
         <label for="signupPwd">Password:</label>
-        <input type="password" class="form-control" placeholder="Enter password" id="signupPwd" name="Password">
+        <input type="password" class="form-control" placeholder="Enter password" id="signupPwd" name="Password" value="@Model.Password">
     </div>
     <div class="form-group">
         <label for="signupPwd">Confirm Password:</label>

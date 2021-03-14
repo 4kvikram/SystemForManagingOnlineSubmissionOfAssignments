@@ -21,6 +21,8 @@ namespace AssignmentSubmission.BAL.Constants
         public const int Deleted = 2;
         public const int Awaited = 3;
         public const int Advance = 4;
+        public const int Pending = 5;
+        public const int Checked = 6;
     }
     public enum Gender
     {

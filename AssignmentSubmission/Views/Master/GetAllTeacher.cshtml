@@ -32,8 +32,8 @@
                 <td>@item.StudyCenterCode</td>
                 <td>@item.Subjects</td>
                 <td>
-                    @Html.ActionLink("Edit", "EditProgram", "Master", new { Id = item.TeacherId }, new { @class = "btn btn-info " })
-                    @Html.ActionLink("Delete", "DeleteProgram", "Master", new { Id = item.TeacherId }, new { @class = "btn btn-danger " })
+                    @Html.ActionLink("Edit", "EditTeacher", "Master", new { Id = item.UserId }, new { @class = "btn btn-info " })
+                    @Html.ActionLink("Delete", "DeleteTeacher", "Master", new { Id = item.UserId }, new { @class = "btn btn-danger " })
                 </td>
             </tr>
             count++;

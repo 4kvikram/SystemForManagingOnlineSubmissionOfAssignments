@@ -25,7 +25,7 @@ namespace AssignmentSubmission.Controllers
             IMainDBUnitOfWork mainDBUnitOfWork,
             MasterService masterService,
             TeacherService teacherService
-            ) 
+            )
         {
             _logger = logger;
             _IMainDBUnitOfWork = mainDBUnitOfWork;
@@ -199,16 +199,38 @@ namespace AssignmentSubmission.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddTeacher()
+        public IActionResult AddTeacher(int Id = 0)
         {
-            return View();
+            TeacherModel tm=new TeacherModel();
+            if (Id != 0)
+            {
+                tm= _teacherService.GetTeachersByUserId(Id);
+                return View(tm);
+            }
+            return View(tm);
         }
         [HttpPost]
         public IActionResult AddTeacher(TeacherModel teacherModel)
         {
-            _teacherService.AddTeacher(teacherModel);
+            bool res = _teacherService.AddTeacher(teacherModel);
+            if (res)
+            {
+                return RedirectToAction("GetAllTeacher");
+            }
             return View();
         }
-
+        public IActionResult EditTeacher(int Id)
+        {
+            return RedirectToAction("AddTeacher", new { Id = Id });
+        }
+        public IActionResult DeleteTeacher(int Id)
+        {
+            var user = _IMainDBUnitOfWork.UserDetailsRepository.GetById(Id);
+            var teacher = _IMainDBUnitOfWork.TeacherDetailsRepository.GetAll().Where(x => x.UserId == Id).FirstOrDefault();
+            _IMainDBUnitOfWork.UserDetailsRepository.Delete(user);
+            _IMainDBUnitOfWork.TeacherDetailsRepository.Delete(teacher);
+            _IMainDBUnitOfWork.Save();
+            return RedirectToAction("GetAllTeacher");
+        }
     }
 }

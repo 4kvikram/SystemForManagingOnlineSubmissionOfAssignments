@@ -52,6 +52,7 @@ namespace AssignmentSubmission.Controllers
                 };
                 string userdata = JsonSerializer.Serialize(activeUserModel);
                 HttpContext.Session.SetString("ActiveUser", userdata);
+                return RedirectToAction("Index","Home");
             }
             return View();
         }
@@ -83,7 +84,7 @@ namespace AssignmentSubmission.Controllers
                     Gender = registrationModel.Gender,
                     Password = registrationModel.Password,
                     Phone = registrationModel.Phone,
-                    Role = Role.User,
+                    Role = Role.Student,
                     Status = Status.Active
                 };
                 _IMainDBUnitOfWork.UserDetailsRepository.Insert(user);
@@ -95,7 +96,7 @@ namespace AssignmentSubmission.Controllers
                         Success = true,
                         Message = $"User saved successfully"
                     };
-                    return View(response);
+                    return RedirectToAction("Login", "Home");
                 }
                 else
                 {

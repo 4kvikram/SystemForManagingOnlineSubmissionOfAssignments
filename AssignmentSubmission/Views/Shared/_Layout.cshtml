@@ -66,14 +66,19 @@
                                     <a class="nav-link text-white" asp-area="" asp-controller="Master" asp-action="GetAllTeacher">Manage Teachers</a>
                                 </li>
                             }
-                            else
+                            else if (userData.Role == Role.Teacher)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Assignment" asp-action="UploadAssignment">Upload Assignment</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Master" asp-action="GetAllTeacher">Check Assignment</a>
+                                </li>
+                            }
+                            else if (userData.Role == Role.Student)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Assignment" asp-action="AssignmentStatus">Assignments</a>
                                 </li>
                             }
                         }
-
 
                     </ul>
 
