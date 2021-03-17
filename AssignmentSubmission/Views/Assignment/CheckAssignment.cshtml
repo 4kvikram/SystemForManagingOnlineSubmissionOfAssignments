@@ -1,1 +1,55 @@
-﻿
+﻿@model ResponseModel
+@using AssignmentSubmission.BAL.Services
+
+@{
+    var assignmentData = (List<AssignmentStatusModel>)Model.data;
+    int count = 1;
+}
+<h3 class="text-center">Assignment Check</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Student Name</th>
+            <th scope="col">Enrollemnt</th>
+            <th scope="col">Subject/Course</th>
+            <th scope="col">Assignment</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date</th>
+            <th scope="col">Marks</th>
+            <th scope="col">Viva Marks</th>
+            <th scope="col">Total Marks</th>
+            <th>Assignment</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (assignmentData != null)
+        {
+            @foreach (var item in assignmentData)
+            {
+                <tr>
+                    <th scope="row">@count</th>
+                    <td>@item.StudentName</td>
+                    <td>@item.Enroll</td>
+                    <td>@item.CourseName</td>
+                    <td>@item.Path</td>
+                    <td>@item.Status</td>
+                    <td>@item.DateOfCreated</td>
+                    <td>@item.Marks</td>
+                    <td>@item.VivaMarks</td>
+                    <td>@(item.Marks+item.VivaMarks)</td>
+                    <td>
+                        @Html.ActionLink("Check Now", "MarkAssignment", "Assignment", new { CourseID=item.CourseID,UserID=item.UserId }, new { @class = "btn btn-info " })
+                    </td>
+                </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>
+
+
+
+
+

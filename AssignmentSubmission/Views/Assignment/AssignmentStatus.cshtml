@@ -34,10 +34,6 @@
                 <td>@item.Marks</td>
                 <td>@item.VivaMarks</td>
                 <td>@(item.Marks+item.VivaMarks)</td>
-                @*<td>
-                    @Html.ActionLink("Edit", "EditTeacher", "Master", new { Id = item.UserId }, new { @class = "btn btn-info " })
-                    @Html.ActionLink("Delete", "DeleteTeacher", "Master", new { Id = item.UserId }, new { @class = "btn btn-danger " })
-                </td>*@
             </tr>
             count++;
         }

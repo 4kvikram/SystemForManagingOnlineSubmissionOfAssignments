@@ -96,7 +96,7 @@ namespace AssignmentSubmission.Controllers
                         Success = true,
                         Message = $"User saved successfully"
                     };
-                    return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "Auth");
                 }
                 else
                 {

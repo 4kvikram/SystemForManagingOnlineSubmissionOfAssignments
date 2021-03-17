@@ -30,20 +30,22 @@ namespace AssignmentSubmission.BAL.Services
                 foreach (var item in teachers)
                 {
                     var teacherUser = _IMainDBUnitOfWork.UserDetailsRepository.GetAll().Where(x => x.UserId == item.UserId).FirstOrDefault();
-
-                    teachersList.Add(new TeacherModel()
+                    if (teacherUser != null)
                     {
-                        Email = teacherUser.Email,
-                        FirstName = teacherUser.FirstName,
-                        LastName = teacherUser.LastName,
-                        Phone = teacherUser.Phone,
-                        UserId = teacherUser.UserId,
-                        Gender = teacherUser.Gender,
-                        Password = teacherUser.Password,
-                        StudyCenterCode = item.StudyCenterCode,
-                        Subjects = item.Subjects,
-                        TeacherId = item.TeacherId
-                    });
+                        teachersList.Add(new TeacherModel()
+                        {
+                            Email = teacherUser.Email,
+                            FirstName = teacherUser.FirstName,
+                            LastName = teacherUser.LastName,
+                            Phone = teacherUser.Phone,
+                            UserId = teacherUser.UserId,
+                            Gender = teacherUser.Gender,
+                            Password = teacherUser.Password,
+                            StudyCenterCode = item.StudyCenterCode,
+                            Subjects = item.Subjects,
+                            TeacherId = item.TeacherId
+                        });
+                    }
                 }
             }
             return teachersList;

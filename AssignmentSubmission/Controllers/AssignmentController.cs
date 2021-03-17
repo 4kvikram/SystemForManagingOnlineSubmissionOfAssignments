@@ -158,7 +158,44 @@ namespace AssignmentSubmission.Controllers
 
         public IActionResult CheckAssignment()
         {
-            return View();
+            ResponseModel responseModel = new ResponseModel();
+            var x = HttpContext.Session.GetString("ActiveUser");
+            if (x != null)
+            {
+                ActiveUserModel userData = new ActiveUserModel();
+                userData = JsonSerializer.Deserialize<ActiveUserModel>(x);
+                if (userData != null)
+                {
+                    var teacherdata = _IMainDBUnitOfWork.TeacherDetailsRepository.GetAll().Where(x => x.UserId == userData.Id).FirstOrDefault();
+                    if (teacherdata != null)
+                    {
+                        var data = _assignmentService.GetAssignmentByCode(Convert.ToInt16(teacherdata.Subjects),Status.Pending);
+                        responseModel.data = data;
+                    }
+                }
+            }
+            return View(responseModel);
+        }
+        [HttpGet]
+        public IActionResult MarkAssignment(int CourseID, int UserID)
+        {
+            AssignmentStatusModel data = _assignmentService.GetAssignmentByUserAndCourseID(UserID, CourseID);
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult MarkAssignment(AssignmentStatusModel model)
+        {
+            var x = HttpContext.Session.GetString("ActiveUser");
+            if (x != null)
+            {
+                ActiveUserModel userData = new ActiveUserModel();
+                userData = JsonSerializer.Deserialize<ActiveUserModel>(x);
+                if (userData != null)
+                {
+                    bool status = _assignmentService.saveMarks(model,userData.Id);
+                }
+            }
+            return RedirectToAction("CheckAssignment");
         }
     }
 }

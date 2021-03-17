@@ -1,0 +1,65 @@
+﻿@model AssignmentStatusModel
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .rown {
+        display: flex;
+    }
+
+    /* Create two equal columns that sits next to each other */
+    .columnn {
+        flex: 50%;
+        padding: 10px;
+        height: 300px; /* Should be removed. Only for demonstration */
+    }
+</style>
+<div class="rown" style="height: 556px;">
+    <div class="columnn">
+        <form method="post">
+            <div class="form-group">
+                <label class="font-weight-bold">  Student's Name : </label>@Model.StudentName
+
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold">  Enrollment No. : </label> @Model.Enroll
+
+            </div>
+            <div class="form-group">
+                <label class="font-weight-bold">  Course No. : </label> @Model.CourseName
+
+            </div>
+            <div class="form-group">
+                <label for="Marks" class="font-weight-bold">Marks</label>
+                <input type="text" class="form-control"
+                       id="Marks" required name="Marks">
+
+            </div>
+            <div class="form-group">
+                <label for="VivaMarks" class="font-weight-bold">Viva Marks</label>
+                <input type="text" class="form-control"
+                       id="VivaMarks" required name="VivaMarks">
+
+            </div>
+            <input type="text" style="visibility:hidden" value="@Model.AssignmentSubmissionId"  name="AssignmentSubmissionId"/>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </form>
+    </div>
+    <div class="columnn">
+        <object data=@Model.Link type="application/pdf" width="800" height="550">
+        </object>
+    </div>
+</div>
+@*
+          <td>@Model.StudentName</td>
+    <td>@Model.Enroll</td>
+    <td>@Model.CourseName</td>
+    <td>@Model.Path</td>
+    <td>@Model.Status</td>
+    <td>@Model.DateOfCreated</td>
+    <td>@Model.Marks</td>
+    <td>@Model.VivaMarks</td>
+    <td>@(Model.Marks+ Model.VivaMarks)</td>*@
